@@ -1,0 +1,31 @@
+image: docker:latest
+
+variables:
+  ECR_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+
+stages:
+  - build
+  - push
+
+build:
+  stage: build
+  script:
+    - docker build -t $ECR_IMAGE .
+    - docker save $ECR_IMAGE > image/$ECR_IMAGE.tar
+  artifacts:
+    paths:
+      - image
+    when: on_success
+    expire_in: 3 days
+  only: 
+  - main
+
+
+push:
+  stage: push
+  dependencies:
+    - build
+  script:
+    - echo "Pushed image to $ECR_IMAGE"
+  only: 
+  - main
