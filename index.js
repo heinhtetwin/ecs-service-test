@@ -3,6 +3,7 @@ const express = require('express')
 const httpErrors = require('http-errors')
 const pino = require('pino')
 const pinoHttp = require('pino-http')
+const dotenv = require('dotenv').config();
 
 module.exports = function main (options, cb) {
   // Set default options

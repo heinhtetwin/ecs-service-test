@@ -2,6 +2,6 @@
 
 module.exports = function (req, res) {
   res.json({
-    hello: 'world!'
+    Message: 'Welcome from DevOps Practice Lab'
   })
 }
