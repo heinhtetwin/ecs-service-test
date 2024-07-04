@@ -25,11 +25,15 @@ jobs:
       - name: Get timestamp
         id: get-timestamp
         run: echo "::set-output name=timestamp::$(date +'%Y-%m-%d-%H-%M')"
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1
-        with:
-          envkey_Port: ${{ secrets.ENV_FILE }}
-          file_name: .env
+      - name: 'Replace env file'
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+          cat .env
+      # - name: Make envfile
+      #   uses: SpicyPizza/create-envfile@v1
+      #   with:
+      #     envkey_Port: ${{ secrets.ENV_FILE }}
+      #     file_name: .env
       - name: Build, tag, and push the image to Amazon ECR
         id: build-image
         env:
